@@ -1,11 +1,18 @@
 from selenium import webdriver
+import unittest
 
-browser = webdriver.Chrome() 
-browser.implicitly_wait(10)   
-browser.get('http://127.0.0.1:8000')
-#browser.get('https://www.google.com')
-print(browser.title)
+class NovoVisitante(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
 
-assert 'sucesso!' in browser.title
+    def tearDown(self):
+        self.browser.quit()
+    
+    def test_abre_home(self):
+        self.browser.get('http://127.0.0.1:8000')
 
-browser.quit()
+        self.assertIn('Guetiga Blog', self.browser.title)
+        self.fail('Finish the test')
+
+if __name__ == '__main__':
+    unittest.main(warnings='ignore')
